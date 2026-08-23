@@ -5,7 +5,7 @@ resource "aws_eks_cluster" "cluster" {
     authentication_mode = "API"
   }
 
-  role_arn = var.awsAcademyRole
+  role_arn = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   version  = "1.36"
 
   vpc_config {

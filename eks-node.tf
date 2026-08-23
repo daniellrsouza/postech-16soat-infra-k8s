@@ -1,7 +1,7 @@
 resource "aws_eks_node_group" "node_group" {
   cluster_name    = aws_eks_cluster.cluster.name
   node_group_name = "nodeg-${var.project_name}"
-  node_role_arn   = var.awsAcademyRole
+  node_role_arn   = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/LabRole"
   subnet_ids      = aws_subnet.subnet_public[*].id
   instance_types  = var.instance_types
 

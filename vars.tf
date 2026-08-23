@@ -24,16 +24,16 @@ variable "tags" {
   }
 }
 
-variable "awsAcademyRole" {
-  description = "AWS Academy role ARN"
-  type        = string
-  default     = "arn:aws:iam::426378709051:role/LabRole"
-}
-
 variable "instance_types" {
   description = "List of instance types for the EKS node group"
   type        = list(string)
   default     = ["t3.medium"]
+}
+
+variable "state_bucket_name" {
+  description = "Nome do bucket S3 do state remoto (precisa bater com backend.tf)"
+  type        = string
+  default     = "tech-challenge-soat16-gp15"
 }
 
 # Preencha os valores reais em terraform.tfvars (gitignored) ou via env vars
