@@ -14,7 +14,7 @@
 # tudo, inclusive futuras mudancas no proprio bucket.
 terraform {
   backend "s3" {
-    bucket = "tech-challenge-soat16-gp15"
+    bucket = "tech-challenge-soat16-gp15-daniel"
     key    = "terraform/terraform.tfstate"
     region = "us-east-1"
   }

@@ -33,7 +33,7 @@ variable "instance_types" {
 variable "state_bucket_name" {
   description = "Nome do bucket S3 do state remoto (precisa bater com backend.tf)"
   type        = string
-  default     = "tech-challenge-soat16-gp15"
+  default     = "tech-challenge-soat16-gp15-daniel"
 }
 
 # Preencha os valores reais em terraform.tfvars (gitignored) ou via env vars
