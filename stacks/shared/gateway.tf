@@ -10,11 +10,11 @@ resource "aws_lb" "internal" {
 }
 
 resource "aws_security_group" "vpc_link" {
-  name        = "sg-vpclink-${var.project_name}"
+  name        = "vpclink-${var.project_name}"
   description = "VPC Link do API Gateway: so sai para dentro da VPC"
   vpc_id      = aws_vpc.main.id
 
-  tags = { Name = "sg-vpclink-${var.project_name}" }
+  tags = { Name = "vpclink-${var.project_name}" }
 }
 
 resource "aws_vpc_security_group_egress_rule" "vpc_link_to_vpc" {
