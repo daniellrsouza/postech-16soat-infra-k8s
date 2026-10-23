@@ -38,8 +38,16 @@ ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
 BUCKET="tfstate-${ACCOUNT_ID}-postech-16soat"
 
 ensure_bucket() {
-  if aws s3api head-bucket --bucket "$BUCKET" 2>/dev/null; then
+  local err
+  if err="$(aws s3api head-bucket --bucket "$BUCKET" 2>&1)"; then
     return
+  fi
+  # Só cria quando o bucket não existe (404). Qualquer outro erro, como o 403
+  # da política voc-cancel-cred quando a sessão do lab encerra, interrompe.
+  if [[ "$err" != *"404"* && "$err" != *"Not Found"* ]]; then
+    echo "Não foi possível verificar o bucket $BUCKET: $err" >&2
+    echo "Sessão do AWS Academy encerrada? Renove as credenciais." >&2
+    exit 1
   fi
   echo "Criando bucket de state $BUCKET" >&2
   if [ "$REGION" = "us-east-1" ]; then

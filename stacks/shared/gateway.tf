@@ -27,8 +27,10 @@ resource "aws_vpc_security_group_egress_rule" "vpc_link_to_vpc" {
 }
 
 # Um VPC Link compartilhado pelas APIs de homolog e prod (D9).
+# Fica nas 2 primeiras subnets privadas: alcança o NLB em qualquer AZ, e mudar
+# subnet_ids recriaria o VPC Link (que não pode ser apagado em uso).
 resource "aws_apigatewayv2_vpc_link" "this" {
   name               = "vpclink-${var.project_name}"
-  subnet_ids         = aws_subnet.private[*].id
+  subnet_ids         = slice(aws_subnet.private[*].id, 0, 2)
   security_group_ids = [aws_security_group.vpc_link.id]
 }

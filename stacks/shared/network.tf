@@ -25,9 +25,10 @@ resource "aws_subnet" "public" {
 }
 
 # Subnets privadas, sem rota para a internet (P6): RDS, Lambda, NLB interno e
-# VPC Link do API Gateway.
+# VPC Link do API Gateway. Uma por AZ dos nós: o NLB só usa alvos em AZs onde
+# tem subnet (com 2 subnets, o nó em us-east-1c ficava "unused").
 resource "aws_subnet" "private" {
-  count             = 2
+  count             = length(var.availability_zones)
   vpc_id            = aws_vpc.main.id
   cidr_block        = cidrsubnet(aws_vpc.main.cidr_block, 4, count.index + length(var.availability_zones))
   availability_zone = var.availability_zones[count.index]

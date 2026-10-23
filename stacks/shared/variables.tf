@@ -17,7 +17,7 @@ variable "cidr_vpc" {
 }
 
 variable "availability_zones" {
-  description = "AZs usadas pelas subnets. As 2 primeiras também recebem as subnets privadas (RDS e Lambda)"
+  description = "AZs usadas pelas subnets públicas (nós) e privadas (NLB, RDS, Lambda, VPC Link)"
   type        = list(string)
   default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
