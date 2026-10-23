@@ -99,6 +99,19 @@ scripts/tf.sh shared destroy
 > Conta AWS Academy: só existe a `LabRole` (usada pelo cluster e pelos nós) e a sessão assume a
 > role `voclabs`, que recebe acesso de administrador ao cluster via Access Entry.
 
+### Sessões do AWS Academy e nós do cluster
+
+Quando a sessão do lab encerra, o AWS Academy nega todas as chamadas (política `voc-cancel-cred`),
+inclusive as da `LabRole` usada pelos nós. Se o node group substituir instâncias nesse intervalo,
+as novas sobem mas o `nodeadm` não consegue registrá-las no EKS e desiste
+(`exceeded max wait time for InstanceCondition waiter` no console da instância): o cluster fica
+sem nós e os pods ficam `Pending`.
+
+Correção: reiniciar as instâncias do node group com a sessão ativa (o `nodeadm` roda a cada boot).
+O script `scripts/atualizar-secrets-aws.sh` do repositório
+[postech-16soat-app](https://github.com/daniellrsouza/postech-16soat-app) faz essa verificação ao
+final e reinicia só os nós não registrados (`SO_VERIFICAR=1` para apenas relatar).
+
 ## Deploy (CI/CD)
 
 `.github/workflows/terraform.yml`:
