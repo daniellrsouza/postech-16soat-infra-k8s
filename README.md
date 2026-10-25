@@ -21,7 +21,7 @@ Ordem de provisionamento: **infra-k8s → infra-db → lambda → app**.
 flowchart LR
     subgraph AWS["AWS us-east-1 · VPC 10.0.0.0/16"]
         subgraph PUB["Subnets públicas (3 AZs)"]
-            EKS["EKS eks-tech-challenge<br/>node group 2–3 × t3.medium<br/>metrics-server"]
+            EKS["EKS eks-tech-challenge<br/>node group 0–2 × t3.medium<br/>metrics-server"]
         end
         subgraph PRIV["Subnets privadas (2 AZs, sem internet)"]
             VPCL[VPC Link]
@@ -98,6 +98,20 @@ scripts/tf.sh shared destroy
 
 > Conta AWS Academy: só existe a `LabRole` (usada pelo cluster e pelos nós) e a sessão assume a
 > role `voclabs`, que recebe acesso de administrador ao cluster via Access Entry.
+
+### Orçamento do lab: desligar os nós
+
+O lab tem limite de US$ 50. Fora do horário de trabalho, desligue os nós (o control plane, o NLB e
+o RDS continuam cobrando, e a aplicação fica fora do ar até religar):
+
+```bash
+scripts/nos.sh desligar   # node group em 0
+scripts/nos.sh ligar      # node group em 2, espera os nós ficarem Ready
+scripts/nos.sh status
+```
+
+O node group vai de 0 a 2 nós; o Terraform ignora o `desired_size`, então desligar não é
+revertido pelo próximo apply.
 
 ### Sessões do AWS Academy e nós do cluster
 

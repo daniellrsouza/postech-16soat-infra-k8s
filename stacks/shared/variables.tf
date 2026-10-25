@@ -34,6 +34,8 @@ variable "node_instance_types" {
   default     = ["t3.medium"]
 }
 
+# Orçamento do lab (D31): no máximo 2 nós; min 0 permite desligar os nós fora
+# do horário de trabalho (scripts/nos.sh).
 variable "node_scaling" {
   description = "Tamanho do node group (min/desired/max)"
   type = object({
@@ -42,9 +44,9 @@ variable "node_scaling" {
     max     = number
   })
   default = {
-    min     = 2
+    min     = 0
     desired = 2
-    max     = 3
+    max     = 2
   }
 }
 
