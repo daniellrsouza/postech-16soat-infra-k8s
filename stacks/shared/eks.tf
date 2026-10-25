@@ -71,5 +71,10 @@ resource "aws_eks_node_group" "this" {
     max_unavailable = 1
   }
 
+  # desired_size muda fora do Terraform (scripts/nos.sh desliga/liga os nós).
+  lifecycle {
+    ignore_changes = [scaling_config[0].desired_size]
+  }
+
   depends_on = [aws_eks_access_policy_association.voclabs_admin]
 }
