@@ -55,3 +55,16 @@ variable "metrics_server_chart_version" {
   type        = string
   default     = "3.14.0"
 }
+
+variable "newrelic_license_key" {
+  description = "License key (INGEST) do New Relic para a integração Kubernetes. Vazio = integração não instalada"
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
+variable "nri_bundle_chart_version" {
+  description = "Versão do chart nri-bundle do New Relic"
+  type        = string
+  default     = "8.0.36"
+}
