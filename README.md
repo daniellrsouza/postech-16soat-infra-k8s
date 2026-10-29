@@ -1,6 +1,6 @@
 # postech-16soat-infra-k8s
 
-Infraestrutura Kubernetes do Tech Challenge (FIAP/SOAT, Grupo 15, Fase 3), em Terraform:
+Infraestrutura Kubernetes do Tech Challenge (FIAP/SOAT, Fase 3), em Terraform:
 rede, cluster **Amazon EKS**, registry **ECR**, entrada privada do cluster (**NLB interno + VPC Link**)
 e uma **HTTP API do API Gateway por ambiente** (`homolog` e `prod`).
 
